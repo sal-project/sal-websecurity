@@ -1,0 +1,43 @@
+    -- DROP DATABASE your_database;
+    CREATE DATABASE IF NOT EXISTS your_database CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    USE your_database;
+
+    -- 組織 (Organization) テーブルの作成
+    CREATE TABLE Organization (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        secret_key VARCHAR(255) NOT NULL,
+        orgname VARCHAR(255) NOT NULL
+    );
+
+    -- ユーザー (User) テーブルの作成
+    CREATE TABLE User (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(255) NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        organization_id INT,
+        mail_address VARCHAR(255),
+        is_admin BOOLEAN DEFAULT FALSE,
+        FOREIGN KEY (organization_id) REFERENCES Organization(id)
+    );
+
+    -- 問い合わせスレッド (Inquiry) テーブルの作成
+    CREATE TABLE Inquiry (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        user_id INT,
+        created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+        deleted BOOLEAN DEFAULT FALSE,
+        FOREIGN KEY (user_id) REFERENCES User(id)
+    );
+
+    -- 問い合わせ書き込み (InquiryPost) テーブルの作成
+    CREATE TABLE InquiryPost (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        inquiry_id INT,
+        user_id INT,
+        message TEXT NOT NULL,
+        created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+        deleted BOOLEAN DEFAULT FALSE,
+        FOREIGN KEY (inquiry_id) REFERENCES Inquiry(id),
+        FOREIGN KEY (user_id) REFERENCES User(id)
+    );

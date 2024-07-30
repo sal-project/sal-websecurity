@@ -1,0 +1,23 @@
+USE your_database;
+-- Organization テーブルにデータを挿入
+INSERT INTO Organization (secret_key, orgname) VALUES
+('sk12345', '株式会社A'),
+('sk67890', '株式会社B'),
+('skabcde', '株式会社C');
+
+-- User テーブルにデータを挿入
+INSERT INTO User (username, password, organization_id, mail_address, is_admin) VALUES
+('田中 太郎', 'password123', 1, 'tanaka@example.com', FALSE),
+('鈴木 一郎', 'password456', 2, 'suzuki@example.com', FALSE),
+('佐藤 恵子', 'password789', 1, 'sato@example.com', TRUE);
+
+-- Inquiry テーブルにデータを挿入
+INSERT INTO Inquiry (title, user_id) VALUES
+('製品についての問い合わせ', 1),
+('サービス改善提案', 2);
+
+-- InquiryPost テーブルにデータを挿入
+INSERT INTO InquiryPost (inquiry_id, user_id, message) VALUES
+(1, 1, '製品の機能について質問があります。'),
+(1, 1, '特定の操作方法を教えてください。'),
+(2, 2, 'サービスに関して改善提案があります。');
